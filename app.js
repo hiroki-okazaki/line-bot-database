@@ -77,27 +77,16 @@ app.post('/callback', function(req, res) {
 
       var message = "";
       
-      //var message = "hello, " + displayName + "さん"; // helloと返事する
-      //var message = message_text; // おうむ返しする
-      //var message = message_text + "[" + message_text.length + "文字]";
-      //sendMessage.send(req, [messageTemplate.textMessage(message_text)]);
+      var message = "hello, " + displayName + "さん"; // helloと返事する
+      var message = message_text; // おうむ返しする
+      var message = message_text + "[" + message_text.length + "文字]";
+      sendMessage.send(req, [messageTemplate.textMessage(message_text)]);
       
       // var url = "https://i.imgur.com/I5AZqHV.png"
       // sendMessage.send(req, [
       //   messageTemplate.imageMessage(url)
       // ]);
       
-      var messages = ["左上を押した", "右上を押した", "左下を押した", "右下を押した"];
-      if (message_text == "猫") {
-         sendMessage.send(req, [ messageTemplate.imagemapMessage(messages, 'https://i.imgur.com/8cbL5dl.jpg') ]);
-         return;
-      } else if (message_text == "犬") {
-         sendMessage.send(req, [ messageTemplate.imagemapMessage(messages, 'https://i.imgur.com/ph82KWH.jpg') ]);
-         return;
-      } else if (message_text == "鹿") {
-         sendMessage.send(req, [ messageTemplate.imagemapMessage(messages, 'https://i.imgur.com/Z6ilhSI.jpg') ]);
-         return;
-      }
 
       // データベースを使う場合、下記のコードはコメントアウトしてください
       //sendMessage.send(req, [messageTemplate.textMessage(message), messageTemplate.quickMessage("質問に答えてね！")]);
