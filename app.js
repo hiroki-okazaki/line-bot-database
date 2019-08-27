@@ -24,15 +24,11 @@ app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
   // herokuのルートディレクトリにアクセスした時に表示される
-  res.send('<h1>LINE BOT の開発セミナーへようこそ</h1>');
+  res.send('<h1>hello world</h1>');
 });
 
 app.get('/index', function(request, response) {
   response.sendFile(path.join(__dirname + '/views/index.html'));
-});
-
-app.get('/home', function(request, response) {
-  response.sendFile(path.join(__dirname + '/views/home.html'));
 });
 
 // async.waterfall([function(){}], function(){})
@@ -55,6 +51,11 @@ app.post('/callback', function(req, res) {
           return;
         }
 
+        // 特定の単語に反応させたい場合
+        //if (event_data['message']['text'].indexOf('please input some word') == -1) {
+        //    return;
+        //}
+
         // ユーザIDを取得する
         var user_id = event_data['source']['userId'];
         var message_id = event_data['message']['id'];
@@ -75,25 +76,17 @@ app.post('/callback', function(req, res) {
     // 返事を生成する関数
     function(req, displayName, message_id, message_type, message_text) {
 
-//      var message = "";
-//      
-//      var message = "hello, " + displayName + "さん"; // helloと返事する
-//      var message = message_text; // おうむ返しする
-//      var message = message_text + "[" + message_text.length + "文字]";
-//      sendMessage.send(req, [messageTemplate.textMessage(message_text)]);
-      
-      // var url = "https://i.imgur.com/I5AZqHV.png"
-      // sendMessage.send(req, [
-      //   messageTemplate.imageMessage(url)
-      // ]);
-      
+      // var message = "hello, " + displayName + "さん"; // helloと返事する
+      //var message = message_text; // おうむ返しする
+      //var message = message_text + "[" + message_text.length + "文字]";
+      // sendMessage.send(req, [messageTemplate.textMessage(message)]);
 
       // データベースを使う場合、下記のコードはコメントアウトしてください
       //sendMessage.send(req, [messageTemplate.textMessage(message), messageTemplate.quickMessage("質問に答えてね！")]);
 
       // // flexメッセージを使う
       // var title = "質問";
-      // var imageUrl = "https://i.imgur.com/I5AZqHV.png";
+      // var imageUrl = "https://pics.prcm.jp/2d801321d0793/72139800/jpeg/72139800.jpeg";
       // var choices = ["選択肢1", "選択肢2", "選択肢3", "選択肢4"];
       // var answers = ["回答1", "回答2", "回答3", "回答4"];
       // sendMessage.send(req, [messageTemplate.customQuestionMessage(title, imageUrl, choices, answers)]);
@@ -107,12 +100,10 @@ app.post('/callback', function(req, res) {
       // 住所 改行 キーワード
       // のフォーマットでメッセージを送ってください
       gnavi.api(req.body, message_text, function(result) {
-        var text = result['name'] + "\n" + result['address'] + "\n" + result['opentime'];
+        var text = result['name'] + "\n" + result['address'];
         sendMessage.send(req, [
           messageTemplate.textMessage(text),
-          messageTemplate.textMessage(result['shop_image1'])
-          // messageTemplate.imageMessage(result['shop_image1']),
-          // messageTemplate.imageMessage(result['shop_image2'])
+          messageTemplate.imageMessage(result['shop_image1'], result['shop_image1'])
         ]);
         return;
       });
